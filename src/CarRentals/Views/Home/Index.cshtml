@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<CarRentals.Domain.Car>
+
+<h1>Index</h1>
+@foreach (var car in Model)
+{
+    <p>@car.Model</p>
+}
