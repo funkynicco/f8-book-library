@@ -1,1 +1,6 @@
 # gitignore
+.vs/
+bin/
+obj/
+
+launchSettings.json
