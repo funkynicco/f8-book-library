@@ -18,7 +18,7 @@ namespace CarRentals.Controllers
 
         public IActionResult Index()
         {
-            return View(_carService.GetCars());
+            return Json(_carService.GetCars());
         }
     }
 }

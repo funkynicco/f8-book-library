@@ -1,6 +1,7 @@
 ﻿using CarRentals.Application.Interfaces;
 using CarRentals.Domain;
 using CarRentals.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,8 @@ namespace CarRentals.Infrastructure.Services
 
         public IEnumerable<Car> GetCars()
         {
-            return _context.Cars;
+            return _context.Cars
+                .Include(x => x.Details);
         }
 
         public void AddCar(Car car)
