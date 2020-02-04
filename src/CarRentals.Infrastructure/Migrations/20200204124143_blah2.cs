@@ -2,7 +2,7 @@
 
 namespace CarRentals.Infrastructure.Migrations
 {
-    public partial class dsada : Migration
+    public partial class blah2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentals.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200204122105_fixed-dbset-cardetails")]
-    partial class fixeddbsetcardetails
+    [Migration("20200204124143_blah2")]
+    partial class blah2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,13 @@ namespace CarRentals.Infrastructure.Migrations
                             DetailsId = 3,
                             Mileage = 642,
                             RegistrationNumber = "KIA499"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DetailsId = 4,
+                            Mileage = 1500,
+                            RegistrationNumber = "PYA635"
                         });
                 });
 
@@ -97,6 +104,11 @@ namespace CarRentals.Infrastructure.Migrations
                         {
                             Id = 3,
                             Model = "Volvo"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Model = "SAAB"
                         });
                 });
 
