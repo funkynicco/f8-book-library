@@ -8,6 +8,8 @@ namespace CarRentals.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
+        public DbSet<CarDetails> CarDetails { get; set; }
+
         public DbSet<Car> Cars { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) :
@@ -40,7 +42,7 @@ namespace CarRentals.Infrastructure.Persistence
                 new CarDetails() { Id = 3, Model = "Volvo" }
                 );
 
-            modelBuilder.Entity<Car>().OwnsOne(x => x.Details).HasData(
+            modelBuilder.Entity<Car>().HasData(
                 new Car() { Id = 99, DetailsId = 1, Mileage = 134, RegistrationNumber = "ABC123" },
                 new Car() { Id = 2, DetailsId = 2, Mileage = 600, RegistrationNumber = "BOA123" },
                 new Car() { Id = 3, DetailsId = 3, Mileage = 642, RegistrationNumber = "KIA499" }
