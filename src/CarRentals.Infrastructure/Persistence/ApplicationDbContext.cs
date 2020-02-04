@@ -37,13 +37,15 @@ namespace CarRentals.Infrastructure.Persistence
             modelBuilder.Entity<CarDetails>().HasData(
                 new CarDetails() { Id = 1, Model = "BMW" },
                 new CarDetails() { Id = 2, Model = "Audi" },
-                new CarDetails() { Id = 3, Model = "Volvo" }
+                new CarDetails() { Id = 3, Model = "Volvo" },
+                new CarDetails() { Id = 4, Model = "SAAB" }
                 );
 
-            modelBuilder.Entity<Car>().OwnsOne(x => x.Details).HasData(
+            modelBuilder.Entity<Car>().HasData(
                 new Car() { Id = 99, DetailsId = 1, Mileage = 134, RegistrationNumber = "ABC123" },
                 new Car() { Id = 2, DetailsId = 2, Mileage = 600, RegistrationNumber = "BOA123" },
-                new Car() { Id = 3, DetailsId = 3, Mileage = 642, RegistrationNumber = "KIA499" }
+                new Car() { Id = 3, DetailsId = 3, Mileage = 642, RegistrationNumber = "KIA499" },
+                new Car() { Id = 4, DetailsId = 4, Mileage = 1500, RegistrationNumber = "PYA635" }
                 );
 
             // CarDetails is the make and model of a car, not a specific car
