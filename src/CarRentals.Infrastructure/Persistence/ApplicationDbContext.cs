@@ -1,4 +1,5 @@
 ﻿using CarRentals.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,13 @@ using System.Text;
 
 namespace CarRentals.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<CarDetails> CarDetails { get; set; }
 
         public DbSet<Car> Cars { get; set; }
 
-        public ApplicationDbContext(DbContextOptions options) :
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
             base(options)
         {
         }

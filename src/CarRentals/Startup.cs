@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using CarRentals.Application.Interfaces;
@@ -8,6 +9,7 @@ using CarRentals.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,23 @@ namespace CarRentals
                  options.UseSqlServer(Configuration.GetConnectionString("CarRentals"),
                  x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
              ));
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication(options =>
+            {
+                //options.DefaultSignInScheme = "/signin-google";
+                options.DefaultScheme = "Application";
+                options.DefaultSignInScheme = "External";
+            })
+                .AddCookie("Application")
+                .AddCookie("External")
+                .AddGoogle(options =>
+                {
+                    options.ClientId = Configuration["GoogleAuth:ClientId"];
+                    options.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,11 +60,15 @@ namespace CarRentals
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
 
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
