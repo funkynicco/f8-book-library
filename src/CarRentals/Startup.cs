@@ -74,8 +74,14 @@ namespace CarRentals
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
+                endpoints.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "admin/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Default",
+                    areaName: "Default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }

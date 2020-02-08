@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentals.Controllers
 {
+    [Area("Default")]
     public class AccountController : Controller
     {
         private readonly IUserService _userService;

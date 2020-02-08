@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentals.Controllers
 {
+    [Area("Default")]
     public class CarsController : Controller
     {
         private readonly ICarService _carService;
