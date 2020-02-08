@@ -42,7 +42,6 @@ namespace CarRentals
 
             services.AddAuthentication(options =>
             {
-                //options.DefaultSignInScheme = "/signin-google";
                 options.DefaultScheme = "Application";
                 options.DefaultSignInScheme = "External";
             })

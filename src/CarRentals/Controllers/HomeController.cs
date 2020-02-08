@@ -12,27 +12,15 @@ namespace CarRentals.Controllers
     public class HomeController : Controller
     {
         private readonly ICarService _carService;
- 
+
         public HomeController(ICarService carService)
         {
             _carService = carService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var claims = new List<object>();
-            foreach(var claim in User.Claims)
-            {
-                claims.Add(new
-                {
-                    claim.Issuer,
-                    claim.Value
-                });
-            }
-
-            return Json(claims);
-
-            //return Json(_carService.GetCars());
+            return View(await _carService.GetCars());
         }
     }
 }

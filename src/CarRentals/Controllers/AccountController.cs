@@ -43,5 +43,21 @@ namespace CarRentals.Controllers
 
             return LocalRedirect(returnUrl);
         }
+
+        public IActionResult Print()
+        {
+            var claims = new List<object>();
+            foreach (var claim in User.Claims)
+            {
+                claims.Add(new
+                {
+                    claim.Issuer,
+                    claim.Type,
+                    claim.Value
+                });
+            }
+
+            return Json(claims);
+        }
     }
 }
