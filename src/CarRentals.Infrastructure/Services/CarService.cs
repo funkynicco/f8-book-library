@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CarRentals.Infrastructure.Services
 {
@@ -17,16 +18,17 @@ namespace CarRentals.Infrastructure.Services
             _context = context;
         }
 
-        public IEnumerable<Car> GetCars()
+        public async Task<IEnumerable<Car>> GetCars()
         {
-            return _context.Cars
-                .Include(x => x.Details);
+            return await _context.Cars
+                .Include(x => x.Details)
+                .ToListAsync();
         }
 
-        public void AddCar(Car car)
+        public async Task AddCar(Car car)
         {
             _context.Add(car);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

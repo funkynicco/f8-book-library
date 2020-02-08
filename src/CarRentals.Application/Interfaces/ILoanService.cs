@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CarRentals.Application.Interfaces
 {
     public interface ILoanService
     {
-        public CarLoan CreateLoan(User _user, Car _car);
+        public Task<CarLoan> CreateLoan(User user, Car car);
 
-        public IEnumerable<CarLoan> GetAllCarLoans();
+        public Task<IEnumerable<CarLoan>> GetAllCarLoans();
 
     }
 }

@@ -82,6 +82,7 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Model")
+                        .IsRequired()
                         .HasColumnType("nvarchar(16)")
                         .HasMaxLength(16);
 
@@ -122,6 +123,9 @@ namespace CarRentals.Infrastructure.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cost")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("LoanEnd")
                         .HasColumnType("datetime2");
 
@@ -129,9 +133,6 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("cost")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -150,28 +151,76 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16)
+                        .HasDefaultValue("User");
 
                     b.Property<string>("SSN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
+                            Id = 1,
+                            Email = "heppe.yt@gmail.com",
+                            FirstName = "Hampus",
+                            LastName = "Precenth",
+                            Role = "Admin",
+                            SSN = "830909-7825"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "albin.arab@gmail.com",
+                            FirstName = "Albin",
+                            LastName = "Arab",
+                            Role = "Admin",
+                            SSN = "940204-2395"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "funkynicco@gmail.com",
+                            FirstName = "Niklas",
+                            LastName = "Landberg",
+                            Role = "Admin",
+                            SSN = "940414-4694"
+                        },
+                        new
+                        {
                             Id = 4,
-                            FirstName = "TestUser",
-                            LastName = "UserLastName",
-                            SSN = "99012323"
+                            Email = "niklas.h.landberg@gmail.com",
+                            FirstName = "Niklas",
+                            LastName = "(Test User)",
+                            Role = "User",
+                            SSN = "112233-4050"
                         });
                 });
 
@@ -186,13 +235,13 @@ namespace CarRentals.Infrastructure.Migrations
 
             modelBuilder.Entity("CarRentals.Domain.CarLoan", b =>
                 {
-                    b.HasOne("CarRentals.Domain.Car", "car")
+                    b.HasOne("CarRentals.Domain.Car", "Car")
                         .WithMany()
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarRentals.Domain.User", "user")
+                    b.HasOne("CarRentals.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
