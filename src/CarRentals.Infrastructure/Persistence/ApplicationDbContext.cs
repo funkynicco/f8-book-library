@@ -73,6 +73,10 @@ namespace CarRentals.Infrastructure.Persistence
             modelBuilder.Entity<CarDetails>().Property(x => x.Model)
                 .IsRequired()
                 .HasMaxLength(16);
+
+            modelBuilder.Entity<CarDetails>().Property(x => x.MaxRentDays)
+                .IsRequired()
+                .HasDefaultValue(14);
         }
 
         private static void ConfigureCar(ModelBuilder modelBuilder)
@@ -88,10 +92,10 @@ namespace CarRentals.Infrastructure.Persistence
         private static void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CarDetails>().HasData(
-                new CarDetails() { Id = 1, Model = "BMW" },
-                new CarDetails() { Id = 2, Model = "Audi" },
-                new CarDetails() { Id = 3, Model = "Volvo" },
-                new CarDetails() { Id = 4, Model = "SAAB" }
+                new CarDetails() { Id = 1, Model = "BMW", MaxRentDays = 14 },
+                new CarDetails() { Id = 2, Model = "Audi", MaxRentDays = 14 },
+                new CarDetails() { Id = 3, Model = "Volvo", MaxRentDays = 14 },
+                new CarDetails() { Id = 4, Model = "SAAB", MaxRentDays = 14 }
                 );
 
             modelBuilder.Entity<Car>().HasData(

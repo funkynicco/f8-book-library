@@ -22,5 +22,6 @@ namespace CarRentals.Domain
         
         public DateTime LoanEnd { get; set; }
 
+        public DateTime? CarReturned { get; set; }
     }
 }
