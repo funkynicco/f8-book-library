@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CarRentals.Application.Interfaces;
 using CarRentals.Infrastructure.Persistence;
 using CarRentals.Infrastructure.Services;
+using CarRentals.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,14 +33,12 @@ namespace CarRentals
 
             services.AddTransient<ICarService, CarService>();
             services.AddTransient<ILoanService, LoanService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("CarRentals"),
                  x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
              ));
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication(options =>
             {
@@ -53,6 +52,9 @@ namespace CarRentals
                     options.ClientId = Configuration["GoogleAuth:ClientId"];
                     options.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
                 });
+
+            // configure all policies
+            services.AddAuthorization(options => new PolicyConfiguration(options).ConfigurePolicies());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

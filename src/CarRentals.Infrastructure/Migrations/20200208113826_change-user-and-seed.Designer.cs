@@ -4,14 +4,16 @@ using CarRentals.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentals.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200208113826_change-user-and-seed")]
+    partial class changeuserandseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,6 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Model")
-                        .IsRequired()
                         .HasColumnType("nvarchar(16)")
                         .HasMaxLength(16);
 
@@ -152,36 +153,20 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16)
-                        .HasDefaultValue("User");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SSN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -192,7 +177,6 @@ namespace CarRentals.Infrastructure.Migrations
                             Email = "heppe.yt@gmail.com",
                             FirstName = "Hampus",
                             LastName = "Precenth",
-                            Role = "Admin",
                             SSN = "830909-7825"
                         },
                         new
@@ -201,7 +185,6 @@ namespace CarRentals.Infrastructure.Migrations
                             Email = "albin.arab@gmail.com",
                             FirstName = "Albin",
                             LastName = "Arab",
-                            Role = "Admin",
                             SSN = "940204-2395"
                         },
                         new
@@ -210,17 +193,7 @@ namespace CarRentals.Infrastructure.Migrations
                             Email = "funkynicco@gmail.com",
                             FirstName = "Niklas",
                             LastName = "Landberg",
-                            Role = "Admin",
                             SSN = "940414-4694"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "niklas.h.landberg@gmail.com",
-                            FirstName = "Niklas",
-                            LastName = "(Test User)",
-                            Role = "User",
-                            SSN = "112233-4050"
                         });
                 });
 

@@ -32,4 +32,9 @@
     <ProjectReference Include="..\CarRentals.Infrastructure\CarRentals.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>
