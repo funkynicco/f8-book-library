@@ -104,7 +104,7 @@ namespace CarRentals.Infrastructure.Persistence
             modelBuilder.Entity<User>().HasData(
                 // admin accounts
                 new User() { Id = 1, FirstName = "Hampus", LastName = "Precenth", Email = "heppe.yt@gmail.com", SSN = "830909-7825", Role = "Admin" },   // personnummer för Astrid Rundgren
-                new User() { Id = 2, FirstName = "Albin", LastName = "Arab", Email = "albin.arab@gmail.com", SSN = "940204-2395", Role = "Admin" },      // personnummer för Sven-Erik Källström
+                new User() { Id = 2, FirstName = "Albin", LastName = "Arab", Email = "albin8686@gmail.com", SSN = "940204-2395", Role = "Admin" },      // personnummer för Sven-Erik Källström
                 new User() { Id = 3, FirstName = "Niklas", LastName = "Landberg", Email = "funkynicco@gmail.com", SSN = "940414-4694", Role = "Admin" }, // personnummer för Noel Rapp
 
                 // test regular users
