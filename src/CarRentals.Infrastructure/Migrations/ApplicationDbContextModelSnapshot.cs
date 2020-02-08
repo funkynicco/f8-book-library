@@ -198,7 +198,7 @@ namespace CarRentals.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Email = "albin.arab@gmail.com",
+                            Email = "albin8686@gmail.com",
                             FirstName = "Albin",
                             LastName = "Arab",
                             Role = "Admin",
