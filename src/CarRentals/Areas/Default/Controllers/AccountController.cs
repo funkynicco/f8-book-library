@@ -53,6 +53,7 @@ namespace CarRentals.Controllers
             claimsIdentity.AddClaim(authenticateResult.Principal.FindFirst(ClaimTypes.NameIdentifier));
             claimsIdentity.AddClaim(authenticateResult.Principal.FindFirst(ClaimTypes.Email));
 
+            claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Surname, user.LastName));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, user.Role));

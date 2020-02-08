@@ -4,14 +4,16 @@ using CarRentals.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentals.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200208182315_added-returned-and-max-rent-days")]
+    partial class addedreturnedandmaxrentdays
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +84,7 @@ namespace CarRentals.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("MaxRentDays")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(14);
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -99,25 +99,25 @@ namespace CarRentals.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            MaxRentDays = 14,
+                            MaxRentDays = 0,
                             Model = "BMW"
                         },
                         new
                         {
                             Id = 2,
-                            MaxRentDays = 14,
+                            MaxRentDays = 0,
                             Model = "Audi"
                         },
                         new
                         {
                             Id = 3,
-                            MaxRentDays = 14,
+                            MaxRentDays = 0,
                             Model = "Volvo"
                         },
                         new
                         {
                             Id = 4,
-                            MaxRentDays = 14,
+                            MaxRentDays = 0,
                             Model = "SAAB"
                         });
                 });
