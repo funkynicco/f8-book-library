@@ -2,6 +2,24 @@
 @{
     ViewData["Title"] = "Index";
 }
+@model IEnumerable<CarRentals.Domain.Car>
 
 <h1>Index</h1>
+
+<table class="table">
+    <tr>
+        <td>Registreringsnummer</td>
+        <td>Modell</td>
+        <td>Miltal</td>
+    </tr>
+    @foreach (var car in Model)
+    {
+        <tr>
+            <td>@car.RegistrationNumber</td>
+            <td>@car.Details.Model</td>
+            <td>@car.Mileage</td>
+        </tr>
+
+}
+</table>
 

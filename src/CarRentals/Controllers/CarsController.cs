@@ -10,15 +10,17 @@ namespace CarRentals.Controllers
     public class CarsController : Controller
     {
         private readonly ICarService _carService;
+        private readonly ILoanService _loanService;
 
-        public CarsController(ICarService carService)
+        public CarsController(ICarService carService, ILoanService loanService)
         {
             _carService = carService;
+            _loanService = loanService;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _carService.GetCars());
+            return Json(await _loanService.GetAllCarLoans());
         }
     }
 }

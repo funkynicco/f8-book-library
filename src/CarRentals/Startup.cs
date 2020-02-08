@@ -31,6 +31,7 @@ namespace CarRentals
             services.AddControllersWithViews();
 
             services.AddTransient<ICarService, CarService>();
+            services.AddTransient<ILoanService, LoanService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("CarRentals"),

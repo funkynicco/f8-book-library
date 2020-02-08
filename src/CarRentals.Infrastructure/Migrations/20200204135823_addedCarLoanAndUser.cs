@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRentals.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class addedCarLoanAndUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +21,21 @@ namespace CarRentals.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
+                    SSN = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cars",
                 columns: table => new
                 {
@@ -27,7 +43,7 @@ namespace CarRentals.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DetailsId = table.Column<int>(nullable: false),
                     Mileage = table.Column<int>(nullable: false),
-                    RegistrationNumber = table.Column<string>(maxLength: 6, nullable: true)
+                    RegistrationNumber = table.Column<string>(maxLength: 6, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +52,35 @@ namespace CarRentals.Infrastructure.Migrations
                         name: "FK_Cars_CarDetails_DetailsId",
                         column: x => x.DetailsId,
                         principalTable: "CarDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarLoans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false),
+                    CarId = table.Column<int>(nullable: false),
+                    cost = table.Column<int>(nullable: false),
+                    LoanStart = table.Column<DateTime>(nullable: false),
+                    LoanEnd = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarLoans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarLoans_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CarLoans_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -63,6 +108,16 @@ namespace CarRentals.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CarLoans_CarId",
+                table: "CarLoans",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarLoans_UserId",
+                table: "CarLoans",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cars_DetailsId",
                 table: "Cars",
                 column: "DetailsId");
@@ -71,7 +126,13 @@ namespace CarRentals.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CarLoans");
+
+            migrationBuilder.DropTable(
                 name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "CarDetails");

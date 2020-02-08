@@ -11,16 +11,9 @@ namespace CarRentals.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ICarService _carService;
-
-        public HomeController(ICarService carService)
+        public IActionResult Index()
         {
-            _carService = carService;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            return View(await _carService.GetCars());
+            return View();
         }
     }
 }
