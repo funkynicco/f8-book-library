@@ -22,7 +22,7 @@ namespace CarRentals.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return Json(await _loanService.GetAllCarLoans());
+            return View(await _carService.GetAvailableCars());
         }
     }
 }

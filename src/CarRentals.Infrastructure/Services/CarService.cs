@@ -30,5 +30,12 @@ namespace CarRentals.Infrastructure.Services
             _context.Add(car);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Car>> GetAvailableCars()
+        {
+            return await _context.Cars
+               .Include(x => x.Details)
+               .ToListAsync();
+        }
     }
 }
