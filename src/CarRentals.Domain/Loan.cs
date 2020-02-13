@@ -16,8 +16,6 @@ namespace CarRentals.Domain
         
         public Car Car { get; set; }
         
-        public int Cost { get; set; }
-        
         public DateTime LoanStart { get; set; }
         
         public DateTime LoanEnd { get; set; }

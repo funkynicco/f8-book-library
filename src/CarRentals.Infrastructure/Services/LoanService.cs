@@ -27,15 +27,27 @@ namespace CarRentals.Infrastructure.Services
                 .ToListAsync();
         }
 
-        public async Task<Loan> CreateLoan(User user, Car car)
+        public async Task<Loan> CreateLoan(User user, Car car, DateTime loanUntil)
         {
-            var loan = new Loan() { User = user, Car = car };
+            var loan = new Loan()
+            {
+                User = user,
+                Car = car,
+                LoanStart = DateTime.UtcNow,
+                LoanEnd = loanUntil
+            };
+
             _context.Add(loan);
+            await _context.SaveChangesAsync();
+
+            var userLoan = new UserLoan() { UserId = user.Id, LoanId = loan.Id };
+            _context.UserLoans.Add(userLoan);
+
             await _context.SaveChangesAsync();
 
             return loan;
         }
-        
+
 
     }
 }

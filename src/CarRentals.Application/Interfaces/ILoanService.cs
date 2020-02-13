@@ -8,7 +8,7 @@ namespace CarRentals.Application.Interfaces
 {
     public interface ILoanService
     {
-        public Task<Loan> CreateLoan(User user, Car car);
+        public Task<Loan> CreateLoan(User user, Car car, DateTime loanUntil);
 
         public Task<IEnumerable<Loan>> GetAllCarLoans();
 

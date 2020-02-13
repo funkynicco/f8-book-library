@@ -115,17 +115,17 @@ namespace CarRentals.Infrastructure.Persistence
         private static void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CarDetails>().HasData(
-                new CarDetails() { Id = 1, Model = "BMW", MaxRentDays = 14 },
-                new CarDetails() { Id = 2, Model = "Audi", MaxRentDays = 14 },
-                new CarDetails() { Id = 3, Model = "Volvo", MaxRentDays = 14 },
-                new CarDetails() { Id = 4, Model = "SAAB", MaxRentDays = 14 }
+                new CarDetails() { Id = 1, Model = "BMW 335D", Year = 2010, MaxRentDays = 14 },
+                new CarDetails() { Id = 2, Model = "Audi A6 Quattro", Year = 2014, MaxRentDays = 14 },
+                new CarDetails() { Id = 3, Model = "Volvo V70", Year = 2012, MaxRentDays = 14 },
+                new CarDetails() { Id = 4, Model = "SAAB 9-3", Year = 2006, MaxRentDays = 14 }
                 );
 
             modelBuilder.Entity<Car>().HasData(
-                new Car() { Id = 99, DetailsId = 1, Mileage = 134, RegistrationNumber = "ABC123" },
-                new Car() { Id = 2, DetailsId = 2, Mileage = 600, RegistrationNumber = "BOA123" },
-                new Car() { Id = 3, DetailsId = 3, Mileage = 642, RegistrationNumber = "KIA499" },
-                new Car() { Id = 4, DetailsId = 4, Mileage = 1500, RegistrationNumber = "PYA635" }
+                new Car() { Id = 99, DetailsId = 1, Mileage = 134, RegistrationNumber = "ABC123", CostPerDay = 2000 },
+                new Car() { Id = 2, DetailsId = 2, Mileage = 600, RegistrationNumber = "BOA123", CostPerDay = 2500 },
+                new Car() { Id = 3, DetailsId = 3, Mileage = 642, RegistrationNumber = "KIA499", CostPerDay = 2200 },
+                new Car() { Id = 4, DetailsId = 4, Mileage = 1500, RegistrationNumber = "PYA635", CostPerDay = 900 }
                 );
 
             modelBuilder.Entity<User>().HasData(

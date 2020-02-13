@@ -55,6 +55,8 @@ namespace CarRentals
 
             // configure all policies
             services.AddAuthorization(options => new PolicyConfiguration(options).ConfigurePolicies());
+
+            MappingConfiguration.ConfigureMappings(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
