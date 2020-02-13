@@ -26,15 +26,7 @@ namespace CarRentals.Security
 
         #region Helper methods
         private void AddPolicy(string policyName, params string[] roles)
-        {
-            _options.AddPolicy(policyName, policy =>
-            {
-                foreach (var role in roles)
-                {
-                    policy.RequireRole(role);
-                }
-            });
-        }
+            => _options.AddPolicy(policyName, policy => policy.RequireRole(roles));
 
         private void AddPolicyRolesByAttributes()
         {

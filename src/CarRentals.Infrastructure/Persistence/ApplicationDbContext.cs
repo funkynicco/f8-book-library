@@ -16,7 +16,9 @@ namespace CarRentals.Infrastructure.Persistence
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<CarLoan> CarLoans { get; set; }
+        public DbSet<Loan> Loans { get; set; }
+
+        public DbSet<UserLoan> UserLoans { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
             base(options)
@@ -29,6 +31,7 @@ namespace CarRentals.Infrastructure.Persistence
             ConfigureCarDetails(modelBuilder);
             ConfigureCar(modelBuilder);
             ConfiguerCarLoan(modelBuilder);
+            ConfigureUserLoan(modelBuilder);
             SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
@@ -64,8 +67,8 @@ namespace CarRentals.Infrastructure.Persistence
 
         private static void ConfiguerCarLoan(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CarLoan>().HasOne(x => x.Car);
-            modelBuilder.Entity<CarLoan>().HasOne(x => x.User);
+            modelBuilder.Entity<Loan>().HasOne(x => x.Car);
+            modelBuilder.Entity<Loan>().HasOne(x => x.User);
         }
 
         private static void ConfigureCarDetails(ModelBuilder modelBuilder)
@@ -87,6 +90,26 @@ namespace CarRentals.Infrastructure.Persistence
 
             modelBuilder.Entity<Car>()
                 .HasOne(x => x.Details);
+        }
+
+        private static void ConfigureUserLoan(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserLoan>().Property(x => x.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<UserLoan>().Property(x => x.LoanId)
+                .IsRequired();
+
+
+            modelBuilder.Entity<UserLoan>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserLoan>()
+                .HasOne(x => x.Loan)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         private static void SeedData(ModelBuilder modelBuilder)
