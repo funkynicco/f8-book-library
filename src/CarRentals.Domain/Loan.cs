@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CarRentals.Domain
 {
-    public class CarLoan
+    public class Loan
     {
         public int Id { get; set; }
 

@@ -7,6 +7,9 @@ namespace CarRentals.Security
 {
     public static class Policies
     {
+        [PolicyRoles(Roles.Admin, Roles.Supervisor)]
+        public const string AdminArea = nameof(AdminArea);
+
         [PolicyRoles(Roles.Admin)]
         public const string CreateCar = nameof(CreateCar);
 

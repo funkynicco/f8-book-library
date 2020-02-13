@@ -33,9 +33,20 @@ namespace CarRentals.Infrastructure.Services
 
         public async Task<IEnumerable<Car>> GetAvailableCars()
         {
-            return await _context.Cars
+            var cars = await _context.Cars
                .Include(x => x.Details)
                .ToListAsync();
+
+            var userLoans = await _context.UserLoans
+                .Include(x => x.Loan)
+                .ToListAsync();
+
+            foreach (var loan in userLoans)
+            {
+                cars.Remove(loan.Loan.Car);
+            }
+
+            return cars;
         }
     }
 }

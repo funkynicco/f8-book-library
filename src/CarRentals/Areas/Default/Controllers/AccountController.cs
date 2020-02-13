@@ -58,9 +58,8 @@ namespace CarRentals.Controllers
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Surname, user.LastName));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, user.Role));
 
-            await HttpContext.SignInAsync(
-                "Application",
-                new ClaimsPrincipal(claimsIdentity));
+            var principal = new ClaimsPrincipal(claimsIdentity);
+            await HttpContext.SignInAsync("Application", principal);
 
             return LocalRedirect(returnUrl);
         }

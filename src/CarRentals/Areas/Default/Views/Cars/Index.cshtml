@@ -4,13 +4,14 @@
 }
 @model IEnumerable<CarRentals.Domain.Car>
 
-<h1>Index</h1>
+<h1>Tillgängliga bilar</h1>
 
 <table class="table">
     <tr>
         <td>Registreringsnummer</td>
         <td>Modell</td>
         <td>Miltal</td>
+        <td></td>
     </tr>
     @foreach (var car in Model)
     {
@@ -18,6 +19,7 @@
             <td>@car.RegistrationNumber</td>
             <td>@car.Details.Model</td>
             <td>@car.Mileage</td>
+            <td><a href="/loan/@car.Id">Låna</a></td>
         </tr>
 
 }

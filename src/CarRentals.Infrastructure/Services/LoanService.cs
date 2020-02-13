@@ -18,18 +18,18 @@ namespace CarRentals.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<CarLoan>> GetAllCarLoans()
+        public async Task<IEnumerable<Loan>> GetAllCarLoans()
         {
-            return await _context.CarLoans
+            return await _context.Loans
                 .Include(x => x.Car)
                 .Include(a => a.Car.Details)
                 .Include(b => b.User)
                 .ToListAsync();
         }
 
-        public async Task<CarLoan> CreateLoan(User user, Car car)
+        public async Task<Loan> CreateLoan(User user, Car car)
         {
-            var loan = new CarLoan() { User = user, Car = car };
+            var loan = new Loan() { User = user, Car = car };
             _context.Add(loan);
             await _context.SaveChangesAsync();
 

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,19 +22,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> <a class="nav-link text-dark" href="/account/login?returnUrl=/">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/account/login?returnUrl=/">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="flex-column-reverse">
-                        <p>
-                            @* TODO: Find a better way to print out this *@
-                            @string.Format("{0} {1}",
-                                User.Claims.Where(a => a.Type == System.Security.Claims.ClaimTypes.GivenName).FirstOrDefault().Value,
-                                User.Claims.Where(a => a.Type == System.Security.Claims.ClaimTypes.Surname).FirstOrDefault().Value)
-                        </p>
+                        <p>@User.Identity.Name</p>
                     </div>
                 }
             </div>
@@ -49,6 +52,11 @@
             &copy; 2020 - Car Rentals - <a href="#">Privacy</a>
             @if (User.Identity.IsAuthenticated)
             {
+                if (await User.IsInPolicy(authService, Policies.AdminArea))
+                {
+                    <span>- <a href="/admin">Admin</a></span>
+                }
+
                 <span>- <a href="/account/logout">Logout</a></span>
             }
         </div>
