@@ -10,6 +10,8 @@ namespace CarRentals.Domain
 
         public string Model { get; set; }
 
+        public int Year { get; set; }
+
         public int MaxRentDays { get; set; }
     }
 }

@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model CarLoanModel
+
+<h1>Låna denna skrothög</h1>
+
+<p>Bilmodel: @Model.Car.Details.Model</p>
+<p>Kostnad per dag: @Model.Car.CostPerDay</p>
+
+<form action="/loan/@Model.Car.Id" method="post">
+    Låna till?<br />
+    <input asp-for="LoanUntil" placeholder="yyyy-mm-dd" class="form-control" /><br />
+    <input type="submit" value="Låna" class="form-control" />
+</form>
+
+@Html.ValidationSummary()

@@ -1,12 +1,14 @@
-﻿using System;
+﻿using CarRentals.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CarRentals.Domain
+namespace CarRentals.Areas.Default.Models
 {
-    public class Car
+    public class CarViewModel
     {
         public int Id { get; set; }
-
-        public int DetailsId { get; set; }
 
         public CarDetails Details { get; set; }
 

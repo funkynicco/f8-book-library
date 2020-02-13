@@ -18,6 +18,13 @@ namespace CarRentals.Infrastructure.Services
             _context = context;
         }
 
+        public async Task<Car> GetCar(int id)
+        {
+            return await _context.Cars
+                .Include(x => x.Details)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<IEnumerable<Car>> GetCars()
         {
             return await _context.Cars

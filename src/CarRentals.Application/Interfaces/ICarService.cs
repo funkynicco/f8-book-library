@@ -8,6 +8,8 @@ namespace CarRentals.Application.Interfaces
 {
     public interface ICarService
     {
+        Task<Car> GetCar(int id);
+
         Task<IEnumerable<Car>> GetCars();
 
         Task AddCar(Car car);
