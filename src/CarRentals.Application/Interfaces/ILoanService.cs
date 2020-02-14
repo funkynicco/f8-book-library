@@ -10,7 +10,9 @@ namespace CarRentals.Application.Interfaces
     {
         public Task<Loan> CreateLoan(User user, Car car, DateTime loanUntil);
 
-        public Task<IEnumerable<Loan>> GetAllCarLoans();
+        public Task<IEnumerable<Loan>> GetCarLoans(int userId);
+
+        public Task<IEnumerable<Loan>> GetCarLoans();
 
     }
 }

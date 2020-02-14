@@ -62,13 +62,19 @@ namespace CarRentals.Areas.Default.Controllers
             // fetch the user by email
             var user = await _userService.GetUserByEmail(email);
 
-            // parse loan until and set the type to UTC date
+            // parse LoanUntil and set the type to UTC date
             var loanUntil = DateTime.SpecifyKind(DateTime.Parse(model.LoanUntil), DateTimeKind.Utc);
 
-            // skapa lånet här...
+            // create loan
             await _loanService.CreateLoan(user, car, loanUntil);
 
             // redirect
+            return LocalRedirect("/cars");
+        }
+
+        public async Task<IActionResult> Return(int id)
+        {
+
             return LocalRedirect("/cars");
         }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CarRentals.Application.Interfaces;
 using CarRentals.Infrastructure.Persistence;
 using CarRentals.Infrastructure.Services;
+using CarRentals.Middleware;
 using CarRentals.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,6 +67,8 @@ namespace CarRentals
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
+
+            app.UseMiddleware<ErrorPageMiddleware>();
 
             app.UseStaticFiles();
 

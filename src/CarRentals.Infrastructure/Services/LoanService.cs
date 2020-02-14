@@ -4,6 +4,7 @@ using CarRentals.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,17 @@ namespace CarRentals.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Loan>> GetAllCarLoans()
+        public async Task<IEnumerable<Loan>> GetCarLoans(int userId)
+        {
+            return await _context.Loans
+                .Where(x => x.UserId == userId)
+                .Include(x => x.Car)
+                .Include(a => a.Car.Details)
+                .Include(b => b.User)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Loan>> GetCarLoans()
         {
             return await _context.Loans
                 .Include(x => x.Car)
@@ -47,7 +58,5 @@ namespace CarRentals.Infrastructure.Services
 
             return loan;
         }
-
-
     }
 }
