@@ -4,6 +4,7 @@ using CarRentals.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,13 +19,42 @@ namespace CarRentals.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Loan>> GetAllCarLoans()
+        public async Task<IEnumerable<Loan>> GetCarLoans(int userId)
         {
-            return await _context.Loans
-                .Include(x => x.Car)
-                .Include(a => a.Car.Details)
-                .Include(b => b.User)
+            var loans = new List<Loan>();
+
+            var userLoans = await _context.UserLoans
+                .Where(x => x.UserId == userId)
+                .Include(x => x.Loan)
+                .Include(x => x.Loan.Car)
+                .Include(x => x.Loan.Car.Details)
                 .ToListAsync();
+
+            userLoans.ForEach(userLoan => loans.Add(userLoan.Loan));
+
+            return loans;
+        }
+
+        public async Task<IEnumerable<Loan>> GetCarLoans()
+        {
+            var loans = new List<Loan>();
+
+            var userLoans = await _context.UserLoans
+                .Include(x => x.Loan)
+                .Include(x => x.Loan.Car)
+                .Include(x => x.Loan.Car.Details)
+                .ToListAsync();
+
+            userLoans.ForEach(userLoan => loans.Add(userLoan.Loan));
+
+            return loans;
+        }
+
+        public async Task<bool> IsCarLoaned(int carId)
+        {
+            return await _context.UserLoans
+                .Include(x => x.Loan)
+                .AnyAsync(a => a.Loan.CarId == carId);
         }
 
         public async Task<Loan> CreateLoan(User user, Car car, DateTime loanUntil)
@@ -48,6 +78,34 @@ namespace CarRentals.Infrastructure.Services
             return loan;
         }
 
+        public async Task<Loan> GetCarLoan(int id)
+        {
+            return await _context.Loans
+                .Include(x => x.Car)
+                .Include(a => a.Car.Details)
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(a => a.Id == id);
+        }
 
+        public async Task<bool> ReturnCar(int loanId)
+        {
+            var loan = await _context.Loans.FirstOrDefaultAsync(a => a.Id == loanId);
+            if (loan == null)
+                return false;
+
+            if (loan.CarReturned.HasValue)
+                return false;
+
+            var userLoan = await _context.UserLoans.FirstOrDefaultAsync(a => a.LoanId == loanId);
+            if (userLoan == null)
+                return false;
+
+            loan.CarReturned = DateTime.UtcNow;
+
+            _context.UserLoans.Remove(userLoan);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

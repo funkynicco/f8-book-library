@@ -21,5 +21,20 @@ namespace CarRentals.Domain
         public DateTime LoanEnd { get; set; }
 
         public DateTime? CarReturned { get; set; }
+
+        public int DaysLoaned
+        {
+            get
+            {
+                var timestamp = DateTime.UtcNow - LoanStart;
+                if (CarReturned.HasValue)
+                {
+                    timestamp = CarReturned.Value - LoanStart;
+                }
+
+                var days = (int)Math.Ceiling(timestamp.TotalDays);
+                return days;
+            }
+        }
     }
 }

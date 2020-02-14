@@ -12,12 +12,10 @@ namespace CarRentals.Controllers
     public class CarsController : Controller
     {
         private readonly ICarService _carService;
-        private readonly ILoanService _loanService;
 
-        public CarsController(ICarService carService, ILoanService loanService)
+        public CarsController(ICarService carService)
         {
             _carService = carService;
-            _loanService = loanService;
         }
 
         public async Task<IActionResult> Index()
