@@ -31,6 +31,9 @@ namespace CarRentals.Areas.Default.Controllers
         [Route("/{controller}/{id}")]
         public async Task<IActionResult> Index(int id)
         {
+            if (await _loanService.IsCarLoaned(id))
+                return BadRequest();
+
             var car = await _carService.GetCar(id);
             if (car == null)
                 return NotFound();
@@ -48,6 +51,9 @@ namespace CarRentals.Areas.Default.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(int id, CarLoanModel model)
         {
+            if (await _loanService.IsCarLoaned(id))
+                return BadRequest();
+
             var car = await _carService.GetCar(id);
 
             // map car to CarViewModel
@@ -56,14 +62,15 @@ namespace CarRentals.Areas.Default.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // get logged in user email
-            var email = User.Claims.Where(a => a.Type == ClaimTypes.Email).FirstOrDefault().Value;
-
-            // fetch the user by email
-            var user = await _userService.GetUserByEmail(email);
-
             // parse LoanUntil and set the type to UTC date
             var loanUntil = DateTime.SpecifyKind(DateTime.Parse(model.LoanUntil), DateTimeKind.Utc);
+            if (loanUntil < DateTime.UtcNow) // check that the loan end date is in the future, at least 1 day
+            {
+                ModelState.AddModelError("LoanUntil", "Date must be in the future.");
+                return View(model);
+            }
+
+            var user = await HttpContext.GetCurrentUser(_userService);
 
             // create loan
             await _loanService.CreateLoan(user, car, loanUntil);
@@ -72,8 +79,43 @@ namespace CarRentals.Areas.Default.Controllers
             return LocalRedirect("/cars");
         }
 
-        public async Task<IActionResult> Return(int id)
+        [Route("/loans")]
+        public async Task<IActionResult> Loans()
         {
+            var user = await HttpContext.GetCurrentUser(_userService);
+
+            var loans = await _loanService.GetCarLoans(user.Id);
+
+            return View(loans);
+        }
+
+        public async Task<IActionResult> Return(int id) // /loan/return/2
+        {
+            var user = await HttpContext.GetCurrentUser(_userService);
+
+            var loan = await _loanService.GetCarLoan(id);
+            if (loan.UserId != user.Id)
+                return BadRequest();
+
+            var model = new ReturnCarViewModel()
+            {
+                Price = loan.Car.CostPerDay * loan.DaysLoaned,
+                LoanId = id
+            };
+            return View(model);
+        }
+
+        [Route("/{controller}/return-confirm/{id}")]
+        public async Task<IActionResult> ReturnConfirm(int id) // /loan/return-confirm/2
+        {
+            var user = await HttpContext.GetCurrentUser(_userService);
+         
+            var loan = await _loanService.GetCarLoan(id);
+            if (loan.UserId != user.Id)
+                return BadRequest();
+
+            if (!await _loanService.ReturnCar(loan.Id))
+                return BadRequest();
 
             return LocalRedirect("/cars");
         }

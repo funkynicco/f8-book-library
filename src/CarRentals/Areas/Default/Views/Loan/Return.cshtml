@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "Return";
+}
+@model ReturnCarViewModel
+
+<h1>Lämna tillbaka bilen</h1>
+
+<p>Pris: @Model.Price:-</p>
+
+<p><a href="/loan/return-confirm/@Model.LoanId" class="btn btn-primary">Betala och lämna</a></p>
