@@ -9,7 +9,7 @@ namespace CarRentals.Areas.Admin.Models
     public class CreateCarDetailsViewModel
     {
         [Required]
-        public string Model { get; set; }
+        public string Make { get; set; }
 
         [Range(1990, 2021)]
         public int Year { get; set; }

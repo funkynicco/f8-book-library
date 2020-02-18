@@ -27,7 +27,7 @@ namespace CarRentals.Areas.Admin.Controllers
 
         //[Authorize(Policy = Policies.CreateCarDetails)]
         [HttpPost]
-        public IActionResult CreateCarDetails( CreateCarDetailsViewModel model)
+        public IActionResult CreateCarDetails(CreateCarDetailsViewModel model)
         {
             //[Bind("Model", "Year", "MaxRentDays")]
             return View(model);
