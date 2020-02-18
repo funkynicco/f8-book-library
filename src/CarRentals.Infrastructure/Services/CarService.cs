@@ -55,5 +55,19 @@ namespace CarRentals.Infrastructure.Services
 
             return cars;
         }
+
+        public async Task AddCarDetails(CarDetails carDetails)
+        {
+            _context.CarDetails.Add(carDetails);
+            await _context.SaveChangesAsync();
+        }
+        public async Task AddCarAndDetails(Car car, CarDetails details)
+        {
+            _context.CarDetails.Add(details);
+            await _context.SaveChangesAsync();
+            car.Details = details;
+            _context.Cars.Add(car);
+            await _context.SaveChangesAsync();
+        }
     }
 }

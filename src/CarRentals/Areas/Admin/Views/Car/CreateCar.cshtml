@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "CreateCar";
+}
+@model CreateCarViewModel
+
+
+<h1>Create Car</h1>
+<form action="/admin/car/createcar" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Make">Bilmodell</label>
+        <input asp-for="Make" class="form-control" /><br />
+        <span asp-validation-for="Make" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Year">Årsmodell</label>
+        <input asp-for="Year" class="form-control" /><br />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RegistrationNumber">Registreringsnummer</label>
+        <input asp-for="RegistrationNumber" class="form-control" /> <br />
+        <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Mileage">Miltal</label>
+        <input asp-for="Mileage" class="form-control" /><br />
+        <span asp-validation-for="Mileage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CostPerDay">Kostnad per dag</label>
+        <input asp-for="CostPerDay" class="form-control" /><br />
+        <span asp-validation-for="CostPerDay" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MaxRentDays">Max antal dagar att hyra</label>
+        <input asp-for="MaxRentDays" class="form-control" /><br />
+        <span asp-validation-for="MaxRentDays" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Skapa" class="form-control" />
+
+</form>

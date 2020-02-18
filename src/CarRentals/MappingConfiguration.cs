@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CarRentals.Areas.Admin.Models;
 using CarRentals.Areas.Default.Models;
 using CarRentals.Domain;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,9 @@ namespace CarRentals
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Car, CarViewModel>();
+                cfg.CreateMap<Car, CarViewModel>().ReverseMap();
+                cfg.CreateMap<CreateCarViewModel, CarDetails>().ReverseMap();
+                cfg.CreateMap<CreateCarViewModel, Car>().ReverseMap();
             });
 
             var mapper = config.CreateMapper();

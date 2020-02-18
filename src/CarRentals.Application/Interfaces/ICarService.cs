@@ -15,5 +15,9 @@ namespace CarRentals.Application.Interfaces
         Task AddCar(Car car);
 
         Task<IEnumerable<Car>> GetAvailableCars();
+
+        Task AddCarDetails(CarDetails carDetails);
+
+        Task AddCarAndDetails(Car car, CarDetails details);
     }
 }
