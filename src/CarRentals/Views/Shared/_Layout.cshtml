@@ -35,7 +35,18 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="flex-column-reverse">
-                        <p>@User.Identity.Name</p>
+                        <p>
+                            @User.Identity.Name
+
+                            @if (User.IsInRole(Roles.Admin))
+                            {
+                                <br /><span>Admin</span>
+                            }
+                            else if (User.IsInRole(Roles.Supervisor))
+                            {
+                                <br /><span>Supervisor</span>
+                            }
+                        </p>
                     </div>
                 }
             </div>

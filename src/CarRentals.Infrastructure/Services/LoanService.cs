@@ -28,6 +28,7 @@ namespace CarRentals.Infrastructure.Services
                 .Include(x => x.Loan)
                 .Include(x => x.Loan.Car)
                 .Include(x => x.Loan.Car.Details)
+                .Include(x => x.User)
                 .ToListAsync();
 
             userLoans.ForEach(userLoan => loans.Add(userLoan.Loan));
@@ -43,6 +44,7 @@ namespace CarRentals.Infrastructure.Services
                 .Include(x => x.Loan)
                 .Include(x => x.Loan.Car)
                 .Include(x => x.Loan.Car.Details)
+                .Include(x => x.User)
                 .ToListAsync();
 
             userLoans.ForEach(userLoan => loans.Add(userLoan.Loan));
@@ -78,13 +80,13 @@ namespace CarRentals.Infrastructure.Services
             return loan;
         }
 
-        public async Task<Loan> GetCarLoan(int id)
+        public async Task<Loan> GetCarLoan(int loan_id)
         {
             return await _context.Loans
                 .Include(x => x.Car)
                 .Include(a => a.Car.Details)
                 .Include(x => x.User)
-                .FirstOrDefaultAsync(a => a.Id == id);
+                .FirstOrDefaultAsync(a => a.Id == loan_id);
         }
 
         public async Task<bool> ReturnCar(int loanId)

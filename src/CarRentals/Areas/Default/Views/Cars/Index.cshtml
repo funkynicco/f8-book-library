@@ -1,10 +1,34 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+
+    var make = Context.Request.Query["make"];
+    var max_cost = Context.Request.Query["max_cost"];
 }
 @model IEnumerable<CarRentals.Domain.Car>
 
 <h1>Tillgängliga bilar</h1>
+
+<form action="/cars" method="get">
+    <div class="row">
+        <div class="form-group col-sm-2">
+            <label for="test">Modell</label>
+            <input name="make" type="text" value="@make" class="form-control" />
+        </div>
+
+        <div class="form-group col-sm-2">
+            <label for="test2">Max kostnad</label>
+            <input name="max_cost" type="text" value="@max_cost" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <input type="submit" value="Filtrera" class="btn btn-primary" />
+            <a href="/cars" class="btn btn-danger">Ta bort filter</a>
+        </div>
+    </div>
+</form>
 
 <table class="table">
     <tr>

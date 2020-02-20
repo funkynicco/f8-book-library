@@ -11,7 +11,7 @@ namespace CarRentals.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
-            return Content("hello world");
+            return View();
         }
     }
 }

@@ -17,5 +17,7 @@ namespace CarRentals.Domain
         public string SSN { get; set; }
 
         public string Role { get; set; }
+
+        public string DisplayName => $"{FirstName} {LastName}";
     }
 }

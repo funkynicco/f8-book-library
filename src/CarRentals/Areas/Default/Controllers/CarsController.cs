@@ -20,7 +20,18 @@ namespace CarRentals.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _carService.GetAvailableCars());
+            var make = Request.Query["make"].ToString();
+
+            var max_cost = int.MaxValue;
+            if (int.TryParse(Request.Query["max_cost"], out int cost))
+                max_cost = cost;
+
+            var cars = await _carService.GetAvailableCars();
+            cars = cars.Where(a =>
+                a.Details.Make.Contains(make, StringComparison.InvariantCultureIgnoreCase) &&
+                a.CostPerDay <= max_cost);
+
+            return View(cars);
         }
     }
 }
