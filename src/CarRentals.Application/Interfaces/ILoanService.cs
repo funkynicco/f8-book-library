@@ -16,7 +16,7 @@ namespace CarRentals.Application.Interfaces
 
         Task<IEnumerable<Loan>> GetCarLoans();
 
-        Task<Loan> GetCarLoan(int id);
+        Task<Loan> GetCarLoan(int loan_id);
 
         Task<bool> ReturnCar(int id);
     }

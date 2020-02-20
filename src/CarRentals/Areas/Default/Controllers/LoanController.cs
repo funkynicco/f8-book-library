@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CarRentals.Application.Interfaces;
 using CarRentals.Areas.Default.Models;
+using CarRentals.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +20,20 @@ namespace CarRentals.Areas.Default.Controllers
         private readonly IUserService _userService;
         private readonly ICarService _carService;
         private readonly ILoanService _loanService;
+        private readonly IAuthorizationService _authService;
 
-        public LoanController(IMapper mapper, IUserService userService, ICarService carService, ILoanService loanService)
+        public LoanController(
+            IMapper mapper,
+            IUserService userService,
+            ICarService carService,
+            ILoanService loanService,
+            IAuthorizationService authService)
         {
             _mapper = mapper;
             _userService = userService;
             _carService = carService;
             _loanService = loanService;
+            _authService = authService;
         }
 
         [Route("/{controller}/{id}")]
@@ -94,7 +102,8 @@ namespace CarRentals.Areas.Default.Controllers
             var user = await HttpContext.GetCurrentUser(_userService);
 
             var loan = await _loanService.GetCarLoan(id);
-            if (loan.UserId != user.Id)
+            if (loan.UserId != user.Id &&
+                !await User.IsInPolicy(_authService, Policies.ReturnCar)) // an admin or supervisor can return a user car
                 return BadRequest();
 
             var model = new ReturnCarViewModel()
@@ -111,7 +120,8 @@ namespace CarRentals.Areas.Default.Controllers
             var user = await HttpContext.GetCurrentUser(_userService);
          
             var loan = await _loanService.GetCarLoan(id);
-            if (loan.UserId != user.Id)
+            if (loan.UserId != user.Id &&
+                !await User.IsInPolicy(_authService, Policies.ReturnCar)) // an admin or supervisor can return a user car
                 return BadRequest();
 
             if (!await _loanService.ReturnCar(loan.Id))

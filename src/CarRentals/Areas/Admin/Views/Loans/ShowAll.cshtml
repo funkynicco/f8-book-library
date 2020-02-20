@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Loans";
+}
+@model IEnumerable<CarRentals.Domain.Loan>
+
+<h1>Alla användarnas lån</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Användare</th>
+            <th>Registreringsnummer</th>
+            <th>Bilmodell</th>
+            <th>Lån start datum</th>
+            <th>Lån slut datum</th>
+            <th>Lånade dagar</th>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loan in Model)
+        {
+            var cssClass = "";
+
+            if (DateTime.UtcNow > loan.LoanEnd)
+            {
+                // försenat
+                cssClass = "class=\"row-red\"";
+            }
+
+            <tr @Html.Raw(cssClass)>
+                <td>@loan.User.DisplayName</td>
+                <td>@loan.Car.RegistrationNumber</td>
+                <td>@loan.Car.Details.Make</td>
+                <td>@loan.LoanStart.ToString("yyyy-MM-dd")</td>
+                <td>@loan.LoanEnd.ToString("yyyy-MM-dd")</td>
+                <td>@loan.DaysLoaned</td>
+                <td><a href="/loan/return/@loan.Id">Lämna tillbaka</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Header {
+    <style type="text/css">
+        .row-red {
+            background: rgba(255, 0, 0, 0.9);
+            color: #fff;
+        }
+
+            .row-red a {
+                color: #fff;
+                text-shadow: 0 0 3px rgba(0, 0, 255, 1);
+            }
+    </style>
+}

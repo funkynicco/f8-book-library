@@ -32,12 +32,6 @@ namespace CarRentals.Infrastructure.Services
                 .ToListAsync();
         }
 
-        public async Task AddCar(Car car)
-        {
-            _context.Add(car);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<Car>> GetAvailableCars()
         {
             var cars = await _context.Cars
@@ -56,16 +50,25 @@ namespace CarRentals.Infrastructure.Services
             return cars;
         }
 
+        public async Task AddCar(Car car)
+        {
+            _context.Add(car);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AddCarDetails(CarDetails carDetails)
         {
             _context.CarDetails.Add(carDetails);
             await _context.SaveChangesAsync();
         }
+
         public async Task AddCarAndDetails(Car car, CarDetails details)
         {
             _context.CarDetails.Add(details);
             await _context.SaveChangesAsync();
+            
             car.Details = details;
+        
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
         }

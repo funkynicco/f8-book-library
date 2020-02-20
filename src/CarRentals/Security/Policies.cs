@@ -14,9 +14,12 @@ namespace CarRentals.Security
         public const string CreateCar = nameof(CreateCar);
 
         [PolicyRoles(Roles.Admin, Roles.Supervisor)]
-        public const string ViewAllLoans = nameof(ViewAllLoans);
+        public const string ViewAllLoans = nameof(ViewAllLoans); // ....
 
         [PolicyRoles(Roles.Admin, Roles.Supervisor)]
         public const string ViewUsers = nameof(ViewUsers);
+
+        [PolicyRoles(Roles.Admin, Roles.Supervisor)]
+        public const string ReturnCar = nameof(ReturnCar);
     }
 }
